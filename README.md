@@ -50,7 +50,7 @@ $.each(persons, new $.Each<Person>() {
 or transform it to a list of ages:
 
 ```java
-ArrayList<Integer> ages = $.transform(persons, new $.Transform<Person,Integer>() {
+List<Integer> ages = $.transform(persons, new $.Transform<Person,Integer>() {
   public Integer transform(Person person) {
     return person.getAge();
   }
@@ -60,7 +60,7 @@ ArrayList<Integer> ages = $.transform(persons, new $.Transform<Person,Integer>()
 or select persons if age > 18:
 
 ```java
-ArrayList<Person> personsGreaterThan18YearsOld = $.select(persons, new $.Condition<Person,Integer>() {
+List<Person> personsGreaterThan18YearsOld = $.select(persons, new $.Condition<Person>() {
   public boolean condition(Person person) {
     return person.getAge() > 18;
   }
