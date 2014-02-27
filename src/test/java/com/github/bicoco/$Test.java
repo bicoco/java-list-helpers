@@ -1,6 +1,5 @@
 package com.github.bicoco;
 
-import com.github.bicoco.$;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -256,4 +255,59 @@ public class $Test {
         assertEquals(5, count);
     }
 
+    public class Person {
+        private String name;
+        private Integer age;
+
+        public Person(String name, Integer age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public Integer getAge() {
+            return age;
+        }
+    }
+
+    public void github() {
+        ArrayList<Person> persons = new ArrayList<Person>();
+        persons.add(new Person("David", 27));
+        persons.add(new Person("André", 30));
+        persons.add(new Person("Fernando", 25));
+        persons.add(new Person("Lucas", 15));
+
+        $.each(persons, new $.Each<Person>() {
+            public void each(Person person) {
+                System.out.println(person.getName());
+            }
+        });
+
+        List<Integer> ages = $.transform(persons, new $.Transform<Person,Integer>() {
+            public Integer transform(Person person) {
+                return person.getAge();
+            }
+        });
+
+        $.each(ages, new $.Each<Integer>() {
+            public void each(Integer age) {
+                System.out.println(age);
+            }
+        });
+
+        List<Person> personsGreaterThan18YearsOld = $.select(persons, new $.Condition<Person>() {
+            public boolean condition(Person person) {
+                return person.getAge() > 18;
+            }
+        });
+
+        $.each(personsGreaterThan18YearsOld, new $.Each<Person>() {
+            public void each(Person person) {
+                System.out.println(person.getName());
+            }
+        });
+    }
 }

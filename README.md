@@ -1,4 +1,4 @@
-java-list-helpers
+Java List Helpers
 =================
 
 It's a useful library for working with Java List. How to use this:
@@ -35,9 +35,7 @@ persons.add(new Person("Fernando", 25));
 persons.add(new Person("Lucas", 15));
 ```
 
-Use this library to:
-
-Iterate for each:
+Use this library to list iterate:
 
 ```java
 $.each(persons, new $.Each<Person>() {
@@ -47,7 +45,7 @@ $.each(persons, new $.Each<Person>() {
 });
 ```
 
-or transform it to a list of ages:
+or transform it in another type list:
 
 ```java
 List<Integer> ages = $.transform(persons, new $.Transform<Person,Integer>() {
@@ -57,7 +55,7 @@ List<Integer> ages = $.transform(persons, new $.Transform<Person,Integer>() {
 });
 ```
 
-or select persons if age > 18:
+or select elements using a condition:
 
 ```java
 List<Person> personsGreaterThan18YearsOld = $.select(persons, new $.Condition<Person>() {
