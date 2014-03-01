@@ -1,5 +1,6 @@
 package com.github.bicoco;
 
+import com.github.bicoco.collections.functions.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,11 +27,10 @@ public class ListTest {
 
     public @Test void eachListOfStrings() {
         final StringBuilder result = new StringBuilder();
-        $.each(strings, new $.Each<String>() {
+        $.each(strings, new EachFunction<String>() {
             @Override
             public void each(String s) {
                 if (s.startsWith("A")) {
-                    System.out.print(s);
                     result.append(s);
                 }
             }
@@ -40,7 +40,7 @@ public class ListTest {
     }
 
     public @Test void mapListOfStrings() {
-        List<String> result = $.map(strings, new $.Map<String>() {
+        List<String> result = $.map(strings, new MapFunction<String>() {
             @Override
             public String map(String s) {
                 if (s.startsWith("A")) {
@@ -60,7 +60,7 @@ public class ListTest {
     }
 
     public @Test void selectValuesGreaterThan4InNumberList() {
-        List<Integer> list = $.select(numbers, new $.Condition<Integer>() {
+        List<Integer> list = $.select(numbers, new ConditionFunction<Integer>() {
             @Override
             public boolean condition(Integer i) {
                 return i < 4;
@@ -75,7 +75,7 @@ public class ListTest {
     }
 
     public @Test void rejectValuesGreaterThan4InNumberList() {
-        List<Integer> result = $.reject(numbers, new $.Condition<Integer>() {
+        List<Integer> result = $.reject(numbers, new ConditionFunction<Integer>() {
             @Override
             public boolean condition(Integer i) {
                 return i < 4;
@@ -90,7 +90,7 @@ public class ListTest {
     }
 
     public @Test void select$ValuesGreaterThan4InNumberList() {
-        $.select$(numbers, new $.Condition<Integer>() {
+        $.select$(numbers, new ConditionFunction<Integer>() {
             @Override
             public boolean condition(Integer i) {
                 return i < 4;
@@ -103,7 +103,7 @@ public class ListTest {
     }
 
     public @Test void reject$ValuesGreaterThan4InNumberList() {
-        $.reject$(numbers, new $.Condition<Integer>() {
+        $.reject$(numbers, new ConditionFunction<Integer>() {
             @Override
             public boolean condition(Integer i) {
                 return i < 4;
@@ -117,7 +117,7 @@ public class ListTest {
 
     public @Test void compact$ValuesGreaterThan4InNumberList() {
 
-        $.insert(numbers, null, null, null);
+        $.push(numbers, null, null, null);
         $.compact$(numbers);
 
         List<Integer> expected = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
@@ -126,7 +126,7 @@ public class ListTest {
     }
 
     public @Test void map$ListOfStrings() {
-        $.map$(strings, new $.Map<String>() {
+        $.map$(strings, new MapFunction<String>() {
             @Override
             public String map(String s) {
                 if (s.startsWith("A")) {
@@ -144,7 +144,7 @@ public class ListTest {
 
     public @Test void transformStringsInIntegers() {
         List<Integer> result = $.transform(strings,
-                new $.Transform<String, Integer>() {
+                new TransformFunction<String, Integer>() {
                     @Override
                     public Integer transform(String s) {
                         return s.length();
@@ -193,18 +193,18 @@ public class ListTest {
         assertEquals("maoe", s);
     }
 
-    public @Test void chainMethodInsert() {
-        $.insert(strings, "F")
-         .insert("G")
-         .insert("H");
+    public @Test void chainMethodPush() {
+        $.push(strings, "F")
+         .push("G")
+         .push("H");
 
         List<String> expected = Arrays.asList(
                 "A", "B", "C", "D", "DA", "ABC", "F", "G", "H");
         assertEquals(expected, strings);
     }
 
-    public @Test void insertMultipleElements() {
-        $.insert(strings, "F", "G", "H");
+    public @Test void pushMultipleElements() {
+        $.push(strings, "F", "G", "H");
         List<String> expected = Arrays.asList(
                 "A", "B", "C", "D", "DA", "ABC", "F", "G", "H");
         assertEquals(expected, strings);
@@ -235,24 +235,72 @@ public class ListTest {
         assertEquals(9, count);
     }
 
-    public @Test void length() {
-        int count = $.length(numbers);
-        assertEquals(9, count);
-    }
-
     public @Test void count() {
         int count = $.count(numbers);
         assertEquals(9, count);
     }
 
     public @Test void countValuesGreaterThan4() {
-        int count = $.count(numbers, new $.Condition<Integer>() {
+        int count = $.count(numbers, new ConditionFunction<Integer>() {
             @Override
             public boolean condition(Integer val) {
                 return val > 4;
             }
         });
         assertEquals(5, count);
+    }
+
+    public @Test void readme() {
+        ArrayList<Person> persons = new ArrayList<Person>();
+        persons.add(new Person("David", 27));
+        persons.add(new Person("André", 30));
+        persons.add(new Person("Fernando", 25));
+        persons.add(new Person("Lucas", 15));
+
+        $.each(persons, new EachFunction<Person>() {
+            public void each(Person person) {
+                System.out.println(person.getName());
+            }
+        });
+
+        List<Integer> ages = $.transform(persons, new TransformFunction<Person,Integer>() {
+            public Integer transform(Person person) {
+                return person.getAge();
+            }
+        });
+
+        System.out.println(ages);
+
+        List<Person> personsGreaterThan18YearsOld = $.select(persons, new ConditionFunction<Person>() {
+            public boolean condition(Person person) {
+                return person.getAge() > 18;
+            }
+        });
+
+        $.each(personsGreaterThan18YearsOld, new EachFunction<Person>() {
+            public void each(Person person) {
+                System.out.println(person.getName());
+            }
+        });
+
+    }
+
+    public class Person {
+        private String name;
+        private Integer age;
+
+        public Person(String name, Integer age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public Integer getAge() {
+            return age;
+        }
     }
 
 }

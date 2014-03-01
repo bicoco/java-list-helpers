@@ -20,24 +20,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.github.bicoco;
+package com.github.bicoco.collections;
 
-import com.github.bicoco.collections.*;
 import com.github.bicoco.collections.functions.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
- * This library is a collection of auxiliary methods for accessing,
- * searching and otherwise manipulating {@link java.util.List} objects.
- * The '$' character is inspired in jQuery library, and the methods
- * in the Array class of ruby language.
- *
- * This class is a wrapper for the methods of api.
+ * Helper methods to List Java Interface
  *
  * @since 1.0
  */
-public class $ {
+public class ListHelper<T> {
+
+    private final List<T> list;
+
+    /**
+     * Default constructor.
+     * @param list the list to execute operations
+     */
+    public ListHelper(List<T> list) {
+        this.list = list;
+    }
 
     // ------------------------------------------------------------------
     // Iterating Methods
@@ -45,31 +51,36 @@ public class $ {
 
     /**
      * Execute a custom action for each element of list.
-     * @param list list of elements to iterate
      * @param function function to execute in each element
      */
-    public static <T> void each(List<T> list, EachFunction<T> function) {
-        new ListHelper<T>(list).each(function);
+    public void each(EachFunction<T> function) {
+        for (T t : list) {
+            function.each(t);
+        }
     }
 
     /**
      * Return a new list of same type element, applying new value for each element.
-     * @param list list of elements to iterate
      * @param function function to apply in each value that returns the new value
      * @return changed list of same type element
      */
-    public static <T> List<T> map(List<T> list, MapFunction<T> function) {
-        return new ListHelper<T>(list).map(function);
+    public List<T> map(MapFunction<T> function) {
+        ArrayList<T> result = new ArrayList<T>();
+        for (T t : list) result.add(function.map(t));
+        return result;
     }
 
     /**
      * Return a new list of another type element, applying a function for each element.
-     * @param list list of elements to iterate
      * @param function function to apply in each element of list
      * @return list of elements transformed
      */
-    public static <T,R> List<R> transform(List<T> list, TransformFunction<T,R> function) {
-        return new ListHelper<T>(list).transform(function);
+    public <R> List<R> transform(TransformFunction<T,R> function) {
+        ArrayList<R> result = new ArrayList<R>();
+        for (T t : list) {
+            result.add(function.transform(t));
+        }
+        return result;
     }
 
     // ------------------------------------------------------------------
@@ -78,22 +89,32 @@ public class $ {
 
     /**
      * Select all elements that condition returns true.
-     * @param list list of elements to iterate
      * @param function Apply in each element and select if returns true.
      * @return list of elements that the condition is true.
      */
-    public static <T> List<T> select(List<T> list, ConditionFunction<T> function) {
-        return new ListHelper<T>(list).select(function);
+    public List<T> select(ConditionFunction<T> function) {
+        ArrayList<T> result = new ArrayList<T>();
+        for (T t : list) {
+            if (function.condition(t)) {
+                result.add(t);
+            }
+        }
+        return result;
     }
 
     /**
      * Select all elements that condition returns false.
-     * @param list list of elements to iterate
      * @param function Apply in each element and select if returns true.
      * @return list of elements that the condition is false.
      */
-    public static <T> List<T> reject(List<T> list, ConditionFunction<T> function) {
-        return new ListHelper<T>(list).reject(function);
+    public List<T> reject(ConditionFunction<T> function) {
+        ArrayList<T> result = new ArrayList<T>();
+        for (T t : list) {
+            if (!function.condition(t)) {
+                result.add(t);
+            }
+        }
+        return result;
     }
 
     // ------------------------------------------------------------------
@@ -102,56 +123,74 @@ public class $ {
 
     /**
      * Modifing list applying new value for each element.
-     * @param list values list of elements
      * @param function function to apply in each value that returns the new value
      */
-    public static <T> void map$(List<T> list, MapFunction<T> function) {
-        new ListHelper<T>(list).map$(function);
+    public void map$(MapFunction<T> function) {
+        ListIterator<T> it = list.listIterator();
+        while (it.hasNext()) {
+            T t = function.map(it.next());
+            it.set(t);
+        }
     }
 
     /**
      * Select all elements that condition returns true.
-     * @param list values list of elements
      * @param function Apply in each element and select if returns true.
      */
-    public static <T> void select$(List<T> list, ConditionFunction<T> function) {
-        new ListHelper<T>(list).select$(function);
+    public void select$(ConditionFunction<T> function) {
+        ListIterator<T> it = list.listIterator();
+        while (it.hasNext()) {
+            T t = it.next();
+            if (!function.condition(t)) {
+                it.remove();
+            }
+        }
     }
 
     /**
      * Select all elements that condition returns false.
-     * @param list values list of elements
      * @param function Apply in each element and select if returns false.
      */
-    public static <T> void reject$(List<T> list, ConditionFunction<T> function) {
-        new ListHelper<T>(list).reject$(function);
+    public void reject$(ConditionFunction<T> function) {
+        ListIterator<T> it = list.listIterator();
+        while (it.hasNext()) {
+            T t = it.next();
+            if (function.condition(t)) {
+                it.remove();
+            }
+        }
     }
 
     /**
-     * Remove null values in list
-     * @param list values list of elements
+     * Remove null values of list.
      */
-    public static <T> void compact$(List<T> list) {
-        new ListHelper<T>(list).compact$();
+    public void compact$() {
+        ListIterator<T> it = list.listIterator();
+        while (it.hasNext()) {
+            if (it.next() == null) {
+                it.remove();
+            }
+        }
     }
 
     /**
      * Adding multiple elements to the end of list.
-     * @param list values list of elements
      * @param ts elements to push
      */
-    public static <T> void push(List<T> list, T... ts) {
-        new ListHelper<T>(list).push(ts);
+    public void push(T... ts) {
+        for (T t : ts) {
+            push(t);
+        }
     }
 
     /**
      * Adding element to the end of list.
-     * @param list values list of elements
      * @param t element to push
      * @return ListHelper to chaining methods
      */
-    public static <T> ListHelper<T> push(List<T> list, T t) {
-        return new ListHelper<T>(list).push(t);
+    public ListHelper<T> push(T t) {
+        this.list.add(t);
+        return this;
     }
 
     // ------------------------------------------------------------------
@@ -164,114 +203,130 @@ public class $ {
      * @param index index of element
      * @return Element at the index
      */
-    public static <T> T at(List<T> list, int index) {
-        return new ListHelper<T>(list).at(index);
+    public T at(int index) {
+        if (index < 0) {
+            index = list.size() + index;
+        }
+
+        if (index >= list.size()) {
+            return null;
+        }
+
+        return list.get(index);
     }
 
     /**
-     * Identical to {@link List#get(int)}
-     * @param list list of elements
+     * Identical to {@link java.util.List#get(int)}.
      * @param index index of element
-     * @return The element at index
-     * @throws java.lang.IndexOutOfBoundsException
+     * @return Object T at param index
+     * @throws IndexOutOfBoundsException
      */
-    public static <T> T fetch(List<T> list, int index) {
-        return new ListHelper<T>(list).fetch(index);
+    public T fetch(int index) {
+        return list.get(index);
     }
 
     /**
-     * Null-safe, get element at index, with default value.
-     * @param list list of elements
+     * Null-safe, defining the default value.
      * @param index index of element
      * @param def Default value
      * @return element of list or default value
      */
-    public static <T> T fetch(List<T> list, int index, T def) {
-        return new ListHelper<T>(list).fetch(index, def);
+    public T fetch(int index, T def) {
+        try {
+            return list.get(index);
+        } catch (IndexOutOfBoundsException e) {
+            return def;
+        }
     }
 
     /**
      * Get the first element of list.
-     * @param list list of elements
      * @return the first element
      */
-    public static <T> T first(List<T> list) {
-        return new ListHelper<T>(list).first();
+    public T first() {
+        return at(0);
     }
 
     /**
      * Get the last element of list.
-     * @param list list of elements
      * @return the last element
      */
-    public static <T> T last(List<T> list) {
-        return new ListHelper<T>(list).last();
+    public T last() {
+        return at(-1);
     }
 
     /**
-     * Get the first n elements of list
-     * @param list values list of type T
+     * Get the first n elements of list.
      * @param n number of elements
      * @return List of the first n elements
      */
-    public static <T> List<T> take(List<T> list, int n) {
-        return new ListHelper<T>(list).take(n);
+    public List<T> take(int n) {
+        return list.subList(0, n);
     }
 
     /**
-     * Get the elements of list excluding the first n elements
-     * @param list list of elements
+     * Get the elements of list excluding the first n elements.
      * @param n number of elements to exclude
      * @return list of the elements
      */
-    public static <T> List<T> drop(List<T> list, int n) {
-        return new ListHelper<T>(list).drop(n);
+    public List<T> drop(int n) {
+        return list.subList(n, list.size());
     }
 
     // ------------------------------------------------------------------
     // Information Methods
     // ------------------------------------------------------------------
+
     /**
      * Check if list is empty
      * @return true if list is null or size is 0.
      */
-    public static <T> boolean isEmpty(List<T> list) {
-        return new ListHelper<T>(list).isEmpty();
+    public boolean isEmpty() {
+        return list == null || list.size() == 0;
     }
 
     /**
      * Check if list is not empty
      * @return true if list is not null and size is greater than 0.
      */
-    public static <T> boolean isNotEmpty(List<T> list) {
-        return new ListHelper<T>(list).isNotEmpty();
+    public boolean isNotEmpty() {
+        return list != null && list.size() > 0;
     }
 
     /**
      * Identical to List#size()
-     * @param list the list of elements
      * @return the size of list
      */
-    public static <T> int size(List<T> list) {
-        return new ListHelper<T>(list).size();
+    public int size() {
+        return list.size();
     }
 
     /**
      * Return size of list or 0 to empty list.
      * @return the size of list
      */
-    public static <T> int count(List<T> list) {
-        return new ListHelper<T>(list).count();
+    public int count() {
+        if (isNotEmpty()) {
+            return size();
+        }
+        return 0;
     }
 
     /**
      * Return size of list where function returns true, or 0 to empty list.
-     * @param list the list of elements
      * @param function the condition to consider element in count
      * @return the size of list
      */
-    public static <T> int count(List<T> list, ConditionFunction<T> function) {
-        return new ListHelper<T>(list).count(function);
+    public int count(ConditionFunction<T> function) {
+        int count = 0;
+        if (isNotEmpty()) {
+            for (T t : list) {
+                if (function.condition(t)) {
+                    count += 1;
+                }
+            }
+        }
+        return count;
     }
 
 }
