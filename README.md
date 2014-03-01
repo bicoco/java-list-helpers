@@ -10,7 +10,7 @@ If you are using Maven, configure the following dependency in your pom.xml:
 <dependency>
   <groupId>com.github.bicoco</groupId>
   <artifactId>java-list-helpers</artifactId>
-  <version>1.0</version>
+  <version>1.1</version>
 </dependency>
 ```
 
@@ -51,30 +51,30 @@ persons.add(new Person("Lucas", 15));
 Use this library to list iterate:
 
 ```java
-$.each(persons, new $.Each<Person>() {
-  public void each(Person person) {
-    System.out.println(person.getName());
-  }
+$.each(persons, new EachFunction<Person>() {
+    public void each(Person person) {
+        System.out.println(person.getName());
+    }
 });
 ```
 
 or transform it in another type list:
 
 ```java
-List<Integer> ages = $.transform(persons, new $.Transform<Person,Integer>() {
-  public Integer transform(Person person) {
-    return person.getAge();
-  }
+List<Integer> ages = $.transform(persons, new TransformFunction<Person,Integer>() {
+    public Integer transform(Person person) {
+        return person.getAge();
+    }
 });
 ```
 
 or select elements using a condition:
 
 ```java
-List<Person> personsGreaterThan18YearsOld = $.select(persons, new $.Condition<Person>() {
-  public boolean condition(Person person) {
-    return person.getAge() > 18;
-  }
+List<Person> personsGreaterThan18YearsOld = $.select(persons, new ConditionFunction<Person>() {
+    public boolean condition(Person person) {
+        return person.getAge() > 18;
+    }
 });
 ```
 

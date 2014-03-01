@@ -4,7 +4,7 @@
 
     <groupId>com.github.bicoco</groupId>
     <artifactId>java-list-helpers</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1</version>
     <packaging>jar</packaging>
 
     <name>Java List Helpers</name>
@@ -44,7 +44,7 @@
         <connection>scm:git:git@github.com:bicoco/java-list-helpers.git</connection>
         <developerConnection>scm:git:git@github.com:bicoco/java-list-helpers.git</developerConnection>
         <tag>java-list-helpers-1.0</tag>
-  </scm>
+    </scm>
 
     <distributionManagement>
         <repository>
