@@ -1,7 +1,20 @@
-Java List Helpers
-=================
+# Java List Helpers
 
-It's a useful library for working with Java List. How to use this:
+It's a useful library for working with Java List.
+
+## Maven Snippet
+
+If you are using Maven, configure the following dependency in your pom.xml:
+
+```xml
+<dependency>
+  <groupId>com.github.bicoco</groupId>
+  <artifactId>java-list-helpers</artifactId>
+  <version>1.0</version>
+</dependency>
+```
+
+## How to use this
 
 Suppose a simple class `Person`
 
