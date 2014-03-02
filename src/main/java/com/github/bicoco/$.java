@@ -227,6 +227,29 @@ public class $ {
     public static <T> List<T> drop(List<T> list, int n) {
         return new ListHelper<T>(list).drop(n);
     }
+    
+    /**
+     * Identical to {@link #find(List, ConditionFunction)}
+     * Get the first element that pass the predicate or null if no value passes
+     * @param function apply in each element 
+     * @return the first element that pass on predicate
+     */
+    public static <T> T detect(List<T> list, ConditionFunction<T> function) {
+    	for (T t : list) {
+			if (function.condition(t)) {
+				return t;
+			}
+		}
+		return null;
+    }
+    
+    /**
+     * Identical to {@link #detect(List, ConditionFunction)}
+     * {@inheritDoc #detect(List, ConditionFunction)}
+     */
+    public static <T> T find(List<T> list, ConditionFunction<T> function) {
+    	return detect(list, function);
+    }
 
     // ------------------------------------------------------------------
     // Information Methods
@@ -273,5 +296,41 @@ public class $ {
     public static <T> int count(List<T> list, ConditionFunction<T> function) {
         return new ListHelper<T>(list).count(function);
     }
+    
+    /**
+     * Identical to {@link #all(List, ConditionFunction)}
+     * Returns true if all of the values in the list pass the predicate truth test
+     * @param function apply in each element and return false if one of them fail
+     * @return true if all elements pass on test
+     */
+    public static <T> boolean every(List<T> list, ConditionFunction<T> function) {
+    	return new ListHelper<T>(list).every(function);
+    }
+    
+    /**
+     * Identical to {@link #every(List, ConditionFunction)}
+     * {@inheritDoc #every(List, ConditionFunction)}
+     */
+    public static <T> boolean all(List<T> list, ConditionFunction<T> function) {
+    	return every(list, function);
+    }
+    
+    /**
+     * Identical to {@link #some(List, ConditionFunction)}
+     * Returns true if any of the values in the list pass the predicate truth test
+     * @param function apply in each element and return true if one of them pass
+     * @return true if any elements pass on test
+     */
+    public static <T> boolean any(List<T> list, ConditionFunction<T> function) {
+    	return new ListHelper<T>(list).any(function);
+    }
+    
+    /**
+     * Identical to {@link #any(List, ConditionFunction)}
+     * {@inheritDoc #any(List, ConditionFunction)}
+     */
+    public static <T> boolean some(List<T> list, ConditionFunction<T> function) {
+    	return any(list, function);
+    }    
 
 }

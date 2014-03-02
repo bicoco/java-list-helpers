@@ -272,6 +272,20 @@ public class ListHelper<T> {
     public List<T> drop(int n) {
         return list.subList(n, list.size());
     }
+    
+    /**
+     * Get the first element that pass the predicate or null if no value passes
+     * @param function apply in each element 
+     * @return the first element that pass on predicate
+     */
+    public T detect(ConditionFunction<T> function) {
+    	for (T t : list) {
+			if (function.condition(t)) {
+				return t;
+			}
+		}
+		return null;
+    }
 
     // ------------------------------------------------------------------
     // Information Methods
@@ -328,5 +342,33 @@ public class ListHelper<T> {
         }
         return count;
     }
-
+    
+    /**
+     * Returns true if all of the values in the list pass the predicate truth test
+     * @param function apply in each element and return false if one of them fail
+     * @return true if all elements pass on test
+     */
+	public boolean every(ConditionFunction<T> function) {
+		for (T t : list) {
+			if (!function.condition(t)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+    /**
+     * Returns true if any of the values in the list pass the predicate truth test
+     * @param function apply in each element and return true if one of them pass
+     * @return true if any elements pass on test
+     */
+	public boolean any(ConditionFunction<T> function) {
+		for (T t : list) {
+			if (function.condition(t)) {
+				return true;
+			}
+		}
+		return true;
+	}
+	
 }
