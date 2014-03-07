@@ -328,6 +328,20 @@ public class ListHelper<T> {
         }
         return count;
     }
+    
+    /**
+     * Returns true if all of the values in the list pass the predicate truth test
+     * @param function apply in each element and return false if one of them fail
+     * @return true if all elements pass on test
+     */
+	public boolean all(ConditionFunction<T> function) {
+		for (T t : list) {
+			if (!function.condition(t)) {
+				return false;
+			}
+		}
+		return true;
+	}
 
     /**
      * Returns true if any of the values in the list pass the predicate truth test
