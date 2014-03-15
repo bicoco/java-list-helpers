@@ -249,6 +249,30 @@ public class ListTest {
         });
         assertEquals(5, count);
     }
+    
+    public @Test void all(){
+    	boolean result = $.all(numbers, new ConditionFunction<Integer>(){
+
+			@Override
+			public boolean condition(Integer t) {
+				return t < 10;
+			}
+
+		});
+    	assertTrue(result);
+    }
+    
+    public @Test void any(){
+    	boolean result = $.any(numbers, new ConditionFunction<Integer>(){
+
+			@Override
+			public boolean condition(Integer t) {
+				return t == 5;
+			}
+
+		});
+    	assertTrue(result);
+    }
 
     public @Test void readme() {
         ArrayList<Person> persons = new ArrayList<Person>();

@@ -273,5 +273,23 @@ public class $ {
     public static <T> int count(List<T> list, ConditionFunction<T> function) {
         return new ListHelper<T>(list).count(function);
     }
+    
+    /**
+     * Returns true if all of the values in the list pass the predicate truth test
+     * @param function apply in each element and return false if one of them fail
+     * @return true if all elements pass on test
+     */
+    public static <T> boolean all(List<T> list, ConditionFunction<T> function) {
+    	return new ListHelper<T>(list).all(function);
+    }
+    
+    /**
+     * Returns true if any of the values in the list pass the predicate truth test
+     * @param function apply in each element and return true if one of them pass
+     * @return true if any elements pass on test
+     */
+    public static <T> boolean any(List<T> list, ConditionFunction<T> function) {
+    	return new ListHelper<T>(list).any(function);
+    }
 
 }
