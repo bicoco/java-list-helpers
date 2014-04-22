@@ -1,16 +1,22 @@
 package com.github.bicoco;
 
-import com.github.bicoco.collections.functions.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.github.bicoco.collections.functions.ConditionFunction;
+import com.github.bicoco.collections.functions.EachFunction;
+import com.github.bicoco.collections.functions.MapFunction;
+import com.github.bicoco.collections.functions.ReduceFunction;
+import com.github.bicoco.collections.functions.TransformFunction;
 
 public class ListTest {
 
