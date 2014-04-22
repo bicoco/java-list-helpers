@@ -356,5 +356,12 @@ public class ListHelper<T> {
 		}
 		return true;
 	}
+	
+	public <R> R reduce(R defaultValue, ReduceFunction<T, R> function) {
+		for (T t : list) {
+			defaultValue = function.reduce(defaultValue, t);
+		}
+		return defaultValue;
+	}
 
 }
