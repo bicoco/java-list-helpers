@@ -291,5 +291,9 @@ public class $ {
     public static <T> boolean any(List<T> list, ConditionFunction<T> function) {
     	return new ListHelper<T>(list).any(function);
     }
+    
+    public static <T, R> R reduce(List<T> list, R defaultValue, ReduceFunction<T, R> function) {
+    	return new ListHelper<T>(list).reduce(defaultValue, function);
+    }
 
 }
