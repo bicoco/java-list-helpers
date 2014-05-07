@@ -30,14 +30,14 @@ import java.util.List;
 /**
  * This library is a collection of auxiliary methods for accessing,
  * searching and otherwise manipulating {@link java.util.List} objects.
- * The '$' character is inspired in jQuery library, and the methods
+ * The '_' character is inspired in Underscore library, and the methods
  * in the Array class of ruby language.
  *
  * This class is a wrapper for the methods of api.
  *
  * @since 1.0
  */
-public class $ {
+public class _ {
 
     // ------------------------------------------------------------------
     // Iterating Methods

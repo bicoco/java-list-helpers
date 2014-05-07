@@ -35,7 +35,7 @@ public class ListTest {
 
     public @Test void eachListOfStrings() {
         final StringBuilder result = new StringBuilder();
-        $.each(strings, new EachFunction<String>() {
+        _.each(strings, new EachFunction<String>() {
             @Override
             public void each(String s) {
                 if (s.startsWith("A")) {
@@ -48,7 +48,7 @@ public class ListTest {
     }
 
     public @Test void mapListOfStrings() {
-        List<String> result = $.map(strings, new MapFunction<String>() {
+        List<String> result = _.map(strings, new MapFunction<String>() {
             @Override
             public String map(String s) {
                 if (s.startsWith("A")) {
@@ -68,7 +68,7 @@ public class ListTest {
     }
 
     public @Test void selectValuesGreaterThan4InNumberList() {
-        List<Integer> list = $.select(numbers, new ConditionFunction<Integer>() {
+        List<Integer> list = _.select(numbers, new ConditionFunction<Integer>() {
             @Override
             public boolean condition(Integer i) {
                 return i < 4;
@@ -83,7 +83,7 @@ public class ListTest {
     }
 
     public @Test void rejectValuesGreaterThan4InNumberList() {
-        List<Integer> result = $.reject(numbers, new ConditionFunction<Integer>() {
+        List<Integer> result = _.reject(numbers, new ConditionFunction<Integer>() {
             @Override
             public boolean condition(Integer i) {
                 return i < 4;
@@ -98,7 +98,7 @@ public class ListTest {
     }
 
     public @Test void select$ValuesGreaterThan4InNumberList() {
-        $.select$(numbers, new ConditionFunction<Integer>() {
+        _.select$(numbers, new ConditionFunction<Integer>() {
             @Override
             public boolean condition(Integer i) {
                 return i < 4;
@@ -111,7 +111,7 @@ public class ListTest {
     }
 
     public @Test void reject$ValuesGreaterThan4InNumberList() {
-        $.reject$(numbers, new ConditionFunction<Integer>() {
+        _.reject$(numbers, new ConditionFunction<Integer>() {
             @Override
             public boolean condition(Integer i) {
                 return i < 4;
@@ -125,8 +125,8 @@ public class ListTest {
 
     public @Test void compact$ValuesGreaterThan4InNumberList() {
 
-        $.push(numbers, null, null, null);
-        $.compact$(numbers);
+        _.push(numbers, null, null, null);
+        _.compact$(numbers);
 
         List<Integer> expected = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
@@ -134,7 +134,7 @@ public class ListTest {
     }
 
     public @Test void map$ListOfStrings() {
-        $.map$(strings, new MapFunction<String>() {
+        _.map$(strings, new MapFunction<String>() {
             @Override
             public String map(String s) {
                 if (s.startsWith("A")) {
@@ -151,7 +151,7 @@ public class ListTest {
     }
 
     public @Test void transformStringsInIntegers() {
-        List<Integer> result = $.transform(strings,
+        List<Integer> result = _.transform(strings,
                 new TransformFunction<String, Integer>() {
                     @Override
                     public Integer transform(String s) {
@@ -166,43 +166,43 @@ public class ListTest {
     }
 
     public @Test void getFirstElement() {
-        String s = $.first(strings);
+        String s = _.first(strings);
         assertEquals("A", s);
     }
 
     public @Test void getLastElement() {
-        String s = $.last(strings);
+        String s = _.last(strings);
         assertEquals("ABC", s);
     }
 
     public @Test void invokeAtWithValidIndex() {
-        String s = $.at(strings, 1);
+        String s = _.at(strings, 1);
         assertEquals("B", s);
     }
 
     public @Test void invokeAtWithInvalidIndex() {
-        String s = $.at(strings, 10);
+        String s = _.at(strings, 10);
         assertNull(s);
     }
 
     public @Test void invokeFetchWithValidIndex() {
-        String s = $.fetch(strings, 1);
+        String s = _.fetch(strings, 1);
         assertEquals("B", s);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void invokeFetchWithInvalidIndex() {
-        String s = $.fetch(strings, 10);
+        String s = _.fetch(strings, 10);
         assertNull(s);
     }
 
     public @Test void invokeFetchWithInvalidIndexAndDefaultValue() {
-        String s = $.fetch(strings, 10, "maoe");
+        String s = _.fetch(strings, 10, "maoe");
         assertEquals("maoe", s);
     }
 
     public @Test void chainMethodPush() {
-        $.push(strings, "F")
+        _.push(strings, "F")
          .push("G")
          .push("H");
 
@@ -212,44 +212,44 @@ public class ListTest {
     }
 
     public @Test void pushMultipleElements() {
-        $.push(strings, "F", "G", "H");
+        _.push(strings, "F", "G", "H");
         List<String> expected = Arrays.asList(
                 "A", "B", "C", "D", "DA", "ABC", "F", "G", "H");
         assertEquals(expected, strings);
     }
 
     public @Test void take() {
-        List<Integer> list = $.take(numbers, 3);
+        List<Integer> list = _.take(numbers, 3);
         List<Integer> expected = Arrays.asList(1, 2, 3);
         assertEquals(expected, list);
     }
 
     public @Test void drop() {
-        List<Integer> list = $.drop(numbers, 3);
+        List<Integer> list = _.drop(numbers, 3);
         List<Integer> expected = Arrays.asList(4, 5, 6, 7, 8, 9);
         assertEquals(expected, list);
     }
 
     public @Test void isEmpty() {
-        assertFalse($.isEmpty(numbers));
+        assertFalse(_.isEmpty(numbers));
     }
 
     public @Test void isNotEmpty() {
-        assertTrue($.isNotEmpty(numbers));
+        assertTrue(_.isNotEmpty(numbers));
     }
 
     public @Test void size() {
-        int count = $.size(numbers);
+        int count = _.size(numbers);
         assertEquals(9, count);
     }
 
     public @Test void count() {
-        int count = $.count(numbers);
+        int count = _.count(numbers);
         assertEquals(9, count);
     }
 
     public @Test void countValuesGreaterThan4() {
-        int count = $.count(numbers, new ConditionFunction<Integer>() {
+        int count = _.count(numbers, new ConditionFunction<Integer>() {
             @Override
             public boolean condition(Integer val) {
                 return val > 4;
@@ -259,37 +259,39 @@ public class ListTest {
     }
     
     public @Test void all(){
-    	boolean result = $.all(numbers, new ConditionFunction<Integer>(){
+    	boolean result = _.all(numbers, new ConditionFunction<Integer>() {
 
-			@Override
-			public boolean condition(Integer t) {
-				return t < 10;
-			}
+            @Override
+            public boolean condition(Integer t) {
+                return t < 10;
+            }
 
-		});
+        });
     	assertTrue(result);
     }
     
     public @Test void any(){
-    	boolean result = $.any(numbers, new ConditionFunction<Integer>(){
+    	boolean result = _.any(numbers, new ConditionFunction<Integer>() {
 
-			@Override
-			public boolean condition(Integer t) {
-				return t == 5;
-			}
+            @Override
+            public boolean condition(Integer t) {
+                return t == 5;
+            }
 
-		});
+        });
     	assertTrue(result);
     }
     
     public @Test void reduce() {
     	List<Integer> ages = Arrays.asList(10, 20, 30, 40, 50);
     	Integer expected = 150;
-    	Integer result = $.reduce(ages, 0, new ReduceFunction<Integer, Integer>() {
-    		public Integer reduce(Integer memo, Integer age) {
-    			return memo += age;
-    		};
-		});
+    	Integer result = _.reduce(ages, 0, new ReduceFunction<Integer, Integer>() {
+            public Integer reduce(Integer memo, Integer age) {
+                return memo += age;
+            }
+
+            ;
+        });
     	assertEquals(expected, result);
     }
     
@@ -301,11 +303,13 @@ public class ListTest {
     	people.add(new Person("Lucas", 40));
 
     	Integer expected = 100;
-    	Integer result = $.reduce(people, 0, new ReduceFunction<Person, Integer>() {
-    		public Integer reduce(Integer memo, Person person) {
-    			return memo += person.getAge();
-    		};
-		});
+    	Integer result = _.reduce(people, 0, new ReduceFunction<Person, Integer>() {
+            public Integer reduce(Integer memo, Person person) {
+                return memo += person.getAge();
+            }
+
+            ;
+        });
     	assertEquals(expected, result);
     }
     
@@ -317,12 +321,14 @@ public class ListTest {
     	people.add(new Person("Lucas", 40));
 
     	String expected = "Names: David, André, Fernando, Lucas";
-    	String result = $.reduce(people, "Names: ", new ReduceFunction<Person, String>() {
-    		public String reduce(String memo, Person person) {
-    			if ("Names: ".equals(memo)) return memo + person.getName();
-    			return memo + ", " + person.getName();
-    		};
-		});
+    	String result = _.reduce(people, "Names: ", new ReduceFunction<Person, String>() {
+            public String reduce(String memo, Person person) {
+                if ("Names: ".equals(memo)) return memo + person.getName();
+                return memo + ", " + person.getName();
+            }
+
+            ;
+        });
     	assertEquals(expected, result);
     }
 
@@ -333,13 +339,13 @@ public class ListTest {
         persons.add(new Person("Fernando", 25));
         persons.add(new Person("Lucas", 15));
 
-        $.each(persons, new EachFunction<Person>() {
+        _.each(persons, new EachFunction<Person>() {
             public void each(Person person) {
                 System.out.println(person.getName());
             }
         });
 
-        List<Integer> ages = $.transform(persons, new TransformFunction<Person,Integer>() {
+        List<Integer> ages = _.transform(persons, new TransformFunction<Person, Integer>() {
             public Integer transform(Person person) {
                 return person.getAge();
             }
@@ -347,13 +353,13 @@ public class ListTest {
 
         System.out.println(ages);
 
-        List<Person> personsGreaterThan18YearsOld = $.select(persons, new ConditionFunction<Person>() {
+        List<Person> personsGreaterThan18YearsOld = _.select(persons, new ConditionFunction<Person>() {
             public boolean condition(Person person) {
                 return person.getAge() > 18;
             }
         });
 
-        $.each(personsGreaterThan18YearsOld, new EachFunction<Person>() {
+        _.each(personsGreaterThan18YearsOld, new EachFunction<Person>() {
             public void each(Person person) {
                 System.out.println(person.getName());
             }
