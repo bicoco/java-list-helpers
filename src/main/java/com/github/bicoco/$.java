@@ -291,5 +291,16 @@ public class $ {
     public static <T> boolean any(List<T> list, ConditionFunction<T> function) {
     	return new ListHelper<T>(list).any(function);
     }
+    
+    /**
+     * Transform a list on a single value
+     * @param list list of elements
+     * @param initialValue initial value of the to be returned
+     * @param function the reduce function
+     * @return the value
+     */
+    public static <T, R> R reduce(List<T> list, R initialValue, ReduceFunction<T, R> function) {
+    	return new ListHelper<T>(list).reduce(initialValue, function);
+    }
 
 }

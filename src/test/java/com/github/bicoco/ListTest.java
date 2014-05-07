@@ -1,14 +1,22 @@
 package com.github.bicoco;
 
-import com.github.bicoco.collections.functions.*;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.github.bicoco.collections.functions.ConditionFunction;
+import com.github.bicoco.collections.functions.EachFunction;
+import com.github.bicoco.collections.functions.MapFunction;
+import com.github.bicoco.collections.functions.ReduceFunction;
+import com.github.bicoco.collections.functions.TransformFunction;
 
 public class ListTest {
 
@@ -272,6 +280,50 @@ public class ListTest {
 
 		});
     	assertTrue(result);
+    }
+    
+    public @Test void reduce() {
+    	List<Integer> ages = Arrays.asList(10, 20, 30, 40, 50);
+    	Integer expected = 150;
+    	Integer result = $.reduce(ages, 0, new ReduceFunction<Integer, Integer>() {
+    		public Integer reduce(Integer memo, Integer age) {
+    			return memo += age;
+    		};
+		});
+    	assertEquals(expected, result);
+    }
+    
+    public @Test void reduce2() {
+    	ArrayList<Person> people = new ArrayList<Person>();
+    	people.add(new Person("David", 10));
+    	people.add(new Person("André", 20));
+    	people.add(new Person("Fernando", 30));
+    	people.add(new Person("Lucas", 40));
+
+    	Integer expected = 100;
+    	Integer result = $.reduce(people, 0, new ReduceFunction<Person, Integer>() {
+    		public Integer reduce(Integer memo, Person person) {
+    			return memo += person.getAge();
+    		};
+		});
+    	assertEquals(expected, result);
+    }
+    
+    public @Test void reduce3() {
+    	ArrayList<Person> people = new ArrayList<Person>();
+    	people.add(new Person("David", 10));
+    	people.add(new Person("André", 20));
+    	people.add(new Person("Fernando", 30));
+    	people.add(new Person("Lucas", 40));
+
+    	String expected = "Names: David, André, Fernando, Lucas";
+    	String result = $.reduce(people, "Names: ", new ReduceFunction<Person, String>() {
+    		public String reduce(String memo, Person person) {
+    			if ("Names: ".equals(memo)) return memo + person.getName();
+    			return memo + ", " + person.getName();
+    		};
+		});
+    	assertEquals(expected, result);
     }
 
     public @Test void readme() {
