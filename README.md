@@ -1,10 +1,10 @@
 # Java List Helpers
 
-It's a useful library for working with Java List.
+Useful library to work with Java Lists.
 
 ## Maven Snippet
 
-If you are using Maven, configure the following dependency in your pom.xml:
+If you are using Maven, configure the following dependency in your `pom.xml`:
 
 ```xml
 <dependency>
@@ -22,16 +22,16 @@ Suppose a simple class `Person`
 public class Person {
   private String name;
   private Integer age;
-  
+
   public Person(String name, Integer age) {
     this.name = name;
     this.age = age;
   }
-  
+
   public String getName() {
     return name;
   }
-  
+
   public Integer getAge() {
     return age;
   }
@@ -48,20 +48,20 @@ persons.add(new Person("Fernando", 25));
 persons.add(new Person("Lucas", 15));
 ```
 
-Use this library to list iterate:
+With this library you can iterate like this:
 
 ```java
-$.each(persons, new EachFunction<Person>() {
+_.each(persons, new EachFunction<Person>() {
     public void each(Person person) {
         System.out.println(person.getName());
     }
 });
 ```
 
-or transform it in another type list:
+or transform it to a list of a different type:
 
 ```java
-List<Integer> ages = $.transform(persons, new TransformFunction<Person,Integer>() {
+List<Integer> ages = _.transform(persons, new TransformFunction<Person,Integer>() {
     public Integer transform(Person person) {
         return person.getAge();
     }
@@ -71,11 +71,21 @@ List<Integer> ages = $.transform(persons, new TransformFunction<Person,Integer>(
 or select elements using a condition:
 
 ```java
-List<Person> personsGreaterThan18YearsOld = $.select(persons, new ConditionFunction<Person>() {
+List<Person> personsGreaterThan18YearsOld = _.select(persons, new ConditionFunction<Person>() {
     public boolean condition(Person person) {
         return person.getAge() > 18;
     }
 });
 ```
 
-and more!!!
+or transform all of the elements to a single value which can be of any type:
+
+```java
+Integer result = _.reduce(people, 0, new ReduceFunction<Person, Integer>() {
+    public Integer reduce(Integer memo, Person person) {
+        return memo += person.getAge();
+    }
+});
+```
+
+There are many other features but for now you can see more examples in the `ListTest` class.
