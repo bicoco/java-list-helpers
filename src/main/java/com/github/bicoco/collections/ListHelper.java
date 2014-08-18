@@ -356,7 +356,14 @@ public class ListHelper<T> {
 		}
 		return true;
 	}
-	
+
+    /**
+     * Transform a list on a single value
+     * @param initialValue initial value of the to be returned
+     * @param function the reduce function
+     * @return the value
+     * @since 1.2
+     */
 	public <R> R reduce(R initialValue, ReduceFunction<T, R> function) {
         R returnValue = initialValue;
 		for (T t : list) {

@@ -287,10 +287,8 @@ public class ListTest {
     	Integer expected = 150;
     	Integer result = _.reduce(ages, 0, new ReduceFunction<Integer, Integer>() {
             public Integer reduce(Integer memo, Integer age) {
-                return memo += age;
+                return memo + age;
             }
-
-            ;
         });
     	assertEquals(expected, result);
     }
@@ -305,10 +303,8 @@ public class ListTest {
     	Integer expected = 100;
     	Integer result = _.reduce(people, 0, new ReduceFunction<Person, Integer>() {
             public Integer reduce(Integer memo, Person person) {
-                return memo += person.getAge();
+                return memo + person.getAge();
             }
-
-            ;
         });
     	assertEquals(expected, result);
     }
@@ -326,8 +322,6 @@ public class ListTest {
                 if ("Names: ".equals(memo)) return memo + person.getName();
                 return memo + ", " + person.getName();
             }
-
-            ;
         });
     	assertEquals(expected, result);
     }

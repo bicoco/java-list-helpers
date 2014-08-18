@@ -298,6 +298,7 @@ public class _ {
      * @param initialValue initial value of the to be returned
      * @param function the reduce function
      * @return the value
+     * @since 1.2
      */
     public static <T, R> R reduce(List<T> list, R initialValue, ReduceFunction<T, R> function) {
     	return new ListHelper<T>(list).reduce(initialValue, function);
