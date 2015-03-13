@@ -10,7 +10,7 @@ If you are using Maven, configure the following dependency in your `pom.xml`:
 <dependency>
   <groupId>com.github.bicoco</groupId>
   <artifactId>java-list-helpers</artifactId>
-  <version>1.1</version>
+  <version>1.3</version>
 </dependency>
 ```
 

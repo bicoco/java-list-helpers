@@ -4,20 +4,19 @@
 
     <groupId>com.github.bicoco</groupId>
     <artifactId>java-list-helpers</artifactId>
-    <version>1.3</version>
+    <version>1.4-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Java List Helpers</name>
     <description>Useful library for working with Java List</description>
     <url>https://github.com/bicoco/java-list-helpers</url>
-<!--
 
+    <!--
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
         <version>7</version>
-    </parent>
--->
+    </parent> -->
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
