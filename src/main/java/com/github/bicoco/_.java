@@ -22,7 +22,7 @@
  */
 package com.github.bicoco;
 
-import com.github.bicoco.collections.*;
+import com.github.bicoco.collections.ListHelper;
 import com.github.bicoco.collections.functions.*;
 
 import java.util.List;
@@ -36,7 +36,10 @@ import java.util.List;
  * This class is a wrapper for the methods of api.
  *
  * @since 1.0
+ * @deprecated This class was deprecated because the '_' character is a identifier in the Java 9
+ * @see com.github.bicoco.Helpers
  */
+@Deprecated
 public class _ {
 
     // ------------------------------------------------------------------
@@ -169,11 +172,11 @@ public class _ {
     }
 
     /**
-     * Identical to {@link List#get(int)}
+     * Identical to {@link java.util.List#get(int)}
      * @param list list of elements
      * @param index index of element
      * @return The element at index
-     * @throws java.lang.IndexOutOfBoundsException
+     * @throws IndexOutOfBoundsException
      */
     public static <T> T fetch(List<T> list, int index) {
         return new ListHelper<T>(list).fetch(index);
